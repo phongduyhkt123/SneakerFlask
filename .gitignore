@@ -1,0 +1,20 @@
+# Python-specific ignores
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Environment and virtual environment ignores
+venv/
+env/
+.env
+
+# Logs
+logs/
+
+# Other common ignores
+*.log
+*.swp
+.DS_Store
+.vscode/
+.idea/
