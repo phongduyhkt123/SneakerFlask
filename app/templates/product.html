@@ -1,0 +1,100 @@
+<!-- templates/product.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product Page - Sneaker Website</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="logo">
+                <img src="{{ url_for('static', filename='assets/nike.png') }}" alt="cart" class="cart-img">
+            </div>
+            <h2 style="margin: 16px 0;">Our Product</h2>
+            <div class="product-carousel">
+                <div class="column">
+                    {% for product in products['shoes'] %}
+                    <div class="product">
+                        <div class="img-container" style="background-color: {{ product['color'] }}">
+                            <img src="{{ product['image'] }}" alt="{{ product['name'] }}" >
+                        </div>
+                        <h1 style="font-size: 20px;">{{ product['name'] }}</h1>
+                        <p style="font-size: 13px; color: #777; line-height: 1.8;">Description: {{ product['description'] }}</p>
+                        <div class="flex space-between">
+                            <p style="font-size: 18px; font-weight: 700;">${{ product['price'] }}</p>
+                            {% if product['id'] in cart_item_ids%}
+                            <div class="add-to-cart-btn hide">
+                                <button class="add-to-cart" data-product-id="{{ product['id'] }}" onclick="addToCart({{ product }})">ADD TO CART</button>
+                            </div>
+                            <div class="add-to-cart-btn">
+                                <div class="checkmark" data-product-id="{{ product['id'] }}">
+                                    <img src="{{ url_for('static', filename='assets/check.png') }}" alt="heart">
+                                </div>
+                            </div>
+                            {% else %}
+                            <div class="add-to-cart-btn">
+                                <button class="add-to-cart" data-product-id="{{ product['id'] }}" onclick="addToCart({{ product }})">ADD TO CART</button>
+                            </div>
+                            <div class="add-to-cart-btn hide">
+                                <div class="checkmark" data-product-id="{{ product['id'] }}">
+                                    <img src="{{ url_for('static', filename='assets/check.png') }}" alt="heart">
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <!-- Cart Column -->
+        <div class="card">
+            <div class="logo">
+                <img src="{{ url_for('static', filename='assets/nike.png') }}" alt="cart" class="cart-img">
+            </div>
+            <div class="flex space-between">
+                <h2 style="margin: 16px 0;">Your Cart</h2>
+                <h2 class='total-price' style="margin: 16px 0;">$0</h2>
+            </div>
+            <div class="product-carousel">
+                <div class="column cart-column">
+                    {% if cart_items %}
+                    <ul id="cart-items" class="w-100 p-10">
+                        {% for item in cart_items %}
+                        <li class="cart-item" data-product-id="{{ item.id }}">
+                            <div class="product-details">
+                                <div class="cart-item-img" style="background-color: {{item['color']}};">
+                                    <img src="{{ item.image }}" alt="{{ item.name }}">
+                                </div>
+                                <div class="flex-1">
+                                    <h3 style="margin-bottom: 10px;">{{ item.name }}</h3>
+                                    <h3 style="font-size: 20px;margin-bottom: 10px;">${{ item.price }}</h3>
+                                    <div class="flex space-between">
+                                        <div class="quantity">
+                                            <button class="quantity-btn minus-btn" onclick="reduceQuantity(this, {{item.id}})">-</button>
+                                            <span class="item-quantity">{{ item.quantity }}</span>
+                                            <button class="quantity-btn plus-btn" onclick="addQuantity(this, {{item.id}})">+</button>
+                                        </div>
+                                        <button class="delete-btn" onclick="deleteCartItem({{item['id']}})">
+                                            <img src="{{ url_for('static', filename='assets/trash.png') }}" alt="trash">
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    <p>Your cart is empty.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/cart.js') }}"></script>
+</body>
+
+</html>
