@@ -28,9 +28,6 @@ function addToCart(product) {
 }
 
 function saveCartItemsToCookies(cartItems) {
-  // Implement your logic to save the cart items to the cookies.
-  // You can use JavaScript Document.cookie API to set cookies.
-  // For this example, we assume the cart items are stored in a cookie named "cartItems".
   setCookie("cartItems", JSON.stringify(cartItems));
 }
 
@@ -47,9 +44,6 @@ function setCookie(name, value, days = 7) {
 }
 
 function getCartItemsFromCookies() {
-  // Implement your logic to retrieve the cart items from the cookies.
-  // You can use JavaScript Document.cookie API to read cookies.
-  // For this example, we assume the cart items are stored in a cookie named "cartItems".
   const cartItemsCookie = getCookie("cartItems");
   return cartItemsCookie ? JSON.parse(cartItemsCookie) : [];
 }
@@ -63,7 +57,6 @@ function getCookie(name) {
 
 // Function to update cart item quantity and total price
 function updateCartItem(itemId, quantity) {
-  // Implement your logic to update the cart item quantity in the cookies
   // For this example, we assume you have a function updateCartItemInCookies(itemId, quantity)
   updateCartItemInCookies(itemId, quantity);
   // Update the cart content after modifying the cart items
@@ -103,8 +96,6 @@ function totalPrice() {
 
 // Function to delete a cart item
 function deleteCartItem(itemId) {
-  // Implement your logic to remove the cart item from the cookies
-  // For this example, we assume you have a function deleteCartItemFromCookies(itemId)
   deleteCartItemFromCookies(itemId);
   // Update the cart content after deleting the cart item
   updateCartContent();

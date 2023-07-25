@@ -4,20 +4,7 @@ from flask import render_template,  request, make_response
 from .config.colors import YELLOW
 from app import app
 
-
-
 @app.route('/')
-def hello():
-    return 'Hello, Flask!'
-
-
-@app.route('/home')
-def index():
-    title = "Welcome to My Flask App"
-    name = "John"  # You can replace this with any dynamic data you want to pass to the template
-    return render_template('index.html',  message="Hello im duy", yellow_color=YELLOW)
-
-@app.route('/product')
 def product_page():
     with open('app/data/product.json') as f:
         products_data = json.load(f)
