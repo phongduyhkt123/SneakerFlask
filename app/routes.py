@@ -4,7 +4,8 @@ from flask import render_template,  request, make_response
 from .config.colors import YELLOW
 from app import app
 
-@app.route('/')
+
+@app.route('/SneakerFlask')
 def product_page():
     with open('app/data/product.json') as f:
         products_data = json.load(f)
