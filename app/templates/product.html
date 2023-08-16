@@ -5,6 +5,10 @@
     <title>Product Page - Sneaker Website</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
 </head>
 
 <body>
@@ -70,15 +74,15 @@
                                     <img src="{{ item.image }}" alt="{{ item.name }}">
                                 </div>
                                 <div class="flex-1">
-                                    <h3 style="margin-bottom: 10px;">{{ item.name }}</h3>
-                                    <h3 style="font-size: 20px;margin-bottom: 10px;">${{ item.price }}</h3>
-                                    <div class="flex space-between">
+                                    <h3 class="cart-item-title"style="margin-bottom: 10px;">{{ item.name }}</h3>
+                                    <h3 class="cart-item-price"style="font-size: 20px;margin-bottom: 10px;">${{ item.price }}</h3>
+                                    <div class="cart-item-quantity flex space-between">
                                         <div class="quantity">
                                             <button class="quantity-btn minus-btn" onclick="reduceQuantity(this, {{item.id}})">-</button>
                                             <span class="item-quantity">{{ item.quantity }}</span>
                                             <button class="quantity-btn plus-btn" onclick="addQuantity(this, {{item.id}})">+</button>
                                         </div>
-                                        <button class="delete-btn" onclick="deleteCartItem({{item['id']}})">
+                                        <button class="delete-btn" onclick="deleteCartItem(this, {{item['id']}})">
                                             <img src="{{ url_for('static', filename='assets/trash.png') }}" alt="trash">
                                         </button>
                                     </div>
