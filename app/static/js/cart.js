@@ -22,17 +22,50 @@ function addToCart(product) {
   // Save the updated cart items to the cookies
   saveCartItemsToCookies(cartItems);
   // Update the cart content in the cartColumn div
-  handleCartItemsChange()
+  handleAddCartItem()
 
   updateAddToCartButton(product.id);
+}
+
+function handleAddCartItem() {
+  addProductToCart();
+
+  // Update the cart total price
+  $(".total-price").text('$' + totalPrice());
 }
 
 function saveCartItemsToCookies(cartItems) {
   setCookie("cartItems", JSON.stringify(cartItems));
 }
 
+function addProductToCart() {
+  return new Promise(function(resolve, reject) {
+    $(".cart-column").load(document.URL + " .cart-column", function(response, status, xhr) {
+      if (status === "success") {
+        resolve(response);
+        doAnimateAdd();
+      } else {
+        reject(new Error("Failed to load cart column."));
+      }
+    });
+  });
+}
+
+function removeProductfromCart(element) {
+  return new Promise(function(resolve, reject) {
+    $(".cart-column").load(document.URL + " .cart-column", function(response, status, xhr) {
+      if (status === "success") {
+        doAnimateRemove(element);
+        resolve(response);
+      } else {
+        reject(new Error("Failed to load cart column."));
+      }
+    });
+  });
+}
+
 function updateCartContent() {
-  $(".cart-column").load(document.URL + " .cart-column");
+  $(".cart-column").load(document.URL + " .cart-column")
 }
 
 // Utility function to set a cookie with a name, value, and expiration date
@@ -95,10 +128,17 @@ function totalPrice() {
 }
 
 // Function to delete a cart item
-function deleteCartItem(itemId) {
+function deleteCartItem(element, itemId) {
   deleteCartItemFromCookies(itemId);
   // Update the cart content after deleting the cart item
-  updateCartContent();
+  handleRemoveCartItem(element);
+}
+
+function handleRemoveCartItem(element) {
+    removeProductfromCart(element); 
+
+    // Update the cart total price
+    $(".total-price").text('$' + totalPrice());
 }
 
 function deleteCartItemFromCookies(itemId) {
@@ -140,6 +180,18 @@ function updateAddToCartButton(productId) {
       $(checkmark).closest(".add-to-cart-btn").addClass("hide");
     }
   }
+}
+
+function doAnimateAdd() {
+  $('.cart-item-img:last').addClass("animate__animated animate__zoomIn")
+  $('.cart-item-title:last').addClass("animate__animated animate__fadeInRight animate__delay-1s animate__fast")
+  $('.cart-item-price:last').addClass("animate__animated animate__fadeInRight animate__delay-1s animate__fast")
+  $('.cart-item-quantity:last').addClass("animate__animated animate__fadeIn animate__delay-1s animate__slow")
+  
+}
+
+function doAnimateRemove(element) {
+  $(element).
 }
 
 $(document).ready(function () {
