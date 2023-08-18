@@ -51,13 +51,19 @@ function addProductToCart() {
   });
 }
 
-function removeProductfromCart(element) {
+function removeProductfromCart(itemId) {
   return new Promise(function(resolve, reject) {
-    $(".cart-column").load(document.URL + " .cart-column", function(response, status, xhr) {
-      if (status === "success") {
-        doAnimateRemove(element);
-        resolve(response);
-      } else {
+    $.ajax({
+      url: document.URL,
+      type: 'GET',
+      success: function(response) {
+        doAnimateRemove(itemId); // Execute animation first
+        setTimeout(function() {
+          $(".cart-column").html($(response).find(".cart-column")); // Update cart column after animation
+          resolve(response);
+        }, 1000); 
+      },
+      error: function(xhr, status, error) {
         reject(new Error("Failed to load cart column."));
       }
     });
@@ -131,11 +137,11 @@ function totalPrice() {
 function deleteCartItem(element, itemId) {
   deleteCartItemFromCookies(itemId);
   // Update the cart content after deleting the cart item
-  handleRemoveCartItem(element);
+  handleRemoveCartItem(itemId);
 }
 
-function handleRemoveCartItem(element) {
-    removeProductfromCart(element); 
+function handleRemoveCartItem(itemId) {
+    removeProductfromCart(itemId); 
 
     // Update the cart total price
     $(".total-price").text('$' + totalPrice());
@@ -190,8 +196,10 @@ function doAnimateAdd() {
   
 }
 
-function doAnimateRemove(element) {
-  $(element).
+function doAnimateRemove(productId) {
+  var element = $(`.cart-item[data-product-id="${productId}"]`)
+  element.addClass("animate__animated animate__zoomOut");
+  console.log("class",element)
 }
 
 $(document).ready(function () {
