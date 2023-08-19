@@ -4,20 +4,26 @@ import os
 from flask import render_template,  request, make_response
 from .config.colors import YELLOW
 from app import app
+from app.queries import productDB
 
 @app.route('/')
 def product_page():
-    my_dir = os.path.dirname(__file__)
-    json_file_path = os.path.join(my_dir, 'data/product.json')
-    with open(json_file_path) as f:
-        products_data = json.load(f)
+    products = productDB.get_all_products()
+
+    # my_dir = os.path.dirname(__file__)
+    # json_file_path = os.path.join(my_dir, 'data/product.json')
+    # with open(json_file_path) as f:
+    #     products_data = json.load(f)
+    #products = products_data['shoes']
+
+    print(products)
 
     cart_items = request.cookies.get('cartItems')
     cart_items = json.loads(cart_items) if cart_items else []
 
     cart_item_ids = [item['id'] for item in cart_items]
 
-    return render_template('product.html', products=products_data, cart_items=cart_items, cart_item_ids=cart_item_ids)
+    return render_template('product.html', products=products, cart_items=cart_items, cart_item_ids=cart_item_ids)
 
 
 @app.route('/get_cart_items', methods=['GET'])

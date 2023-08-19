@@ -98,7 +98,7 @@
 
   /* responsive */
 /* Media query for mobile-sized screens (max-width: 767px) */
-@media (max-width: 767px) {
+@media (max-width: 800px) {
   .container {
       display: flex;
       flex-direction: column;
@@ -113,7 +113,7 @@
   }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 801px) {
   .container {
       height: 100vh;
   }
@@ -154,25 +154,14 @@ body {
     transform: translateX(-50%) skewY(-8deg);
     background-color: #f6c90e;
     z-index: -1;
-    animation: App_wave_3CtRm 8s ease-in-out infinite alternate;
-    animation-duration: 8s;
-    animation-timing-function: ease-in-out;
-    animation-delay: 0s;
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
-    animation-fill-mode: none;
-    animation-play-state: running;
-    animation-name: App_wave_3CtRm;
-    animation-timeline: auto;
-    animation-range-start: normal;
-    animation-range-end: normal;
+    animation: moveBackground 13s ease-in-out infinite;
 }
 
 .card {
     height: 600px;
     min-height: 600px;
-    width: 360px;
-    min-width: 360px;
+    width: 340px;
+    min-width: 340px;
     margin-right: 20px;
     margin-left: 20px;
     padding: 0 28px;
@@ -200,7 +189,7 @@ body {
 
 .logo {
     position: relative;
-    margin: 12px 0;
+    margin: 12px 6px 0px;
 }
 
 .logo img{
@@ -234,12 +223,17 @@ body {
 .img-container {
     border-radius: 30px;
     height: 380px;
+    display: flex;
+    align-items: center;
 }
 
 .product .img-container img {
     max-width: 100%; /* Ensure the image scales proportionally within the product container */
     height: auto; /* Let the height adjust accordingly */
     transform: rotate(-24deg);
+    filter: drop-shadow(0 30px 20px rgba(0,0,0,.2));
+    position: relative;
+    left: -14px;
 }
 
 /* Hide the scrollbar */
@@ -413,4 +407,12 @@ body {
 
 .p-10 {
     padding: 10px;
+}
+
+
+/* animation */
+@keyframes moveBackground {
+  50% {
+    top: 65%; /* Move the element up at the midpoint of the animation */
+  }
 }

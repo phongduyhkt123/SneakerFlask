@@ -134,7 +134,7 @@ function totalPrice() {
 }
 
 // Function to delete a cart item
-function deleteCartItem(element, itemId) {
+function deleteCartItem(itemId) {
   deleteCartItemFromCookies(itemId);
   // Update the cart content after deleting the cart item
   handleRemoveCartItem(itemId);
@@ -168,6 +168,8 @@ function reduceQuantity(element, id) {
   const quantity = parseInt(quantitySpan.text()) - 1;
   if (quantity >= 1) {
     updateCartItem(id, quantity);
+  } else {
+    deleteCartItem(id)
   }
 }
 
